@@ -281,7 +281,7 @@ class TomeRater():
 #Exceptions
 
 class TypeError(Exception):
-    """ Input is of different Type"""
+    """ Input is of a different type."""
     pass
 
 
