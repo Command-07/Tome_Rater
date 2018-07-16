@@ -237,7 +237,7 @@ class TomeRater():
 
     #Returns the book that has the highest rating.
     def highest_rated_book(self):
-        highest_average = 0
+        highest_average = float("-inf")
         for book in self.books.keys():
             if book.get_average_rating() > highest_average:
                 highest_average = book.get_average_rating()
