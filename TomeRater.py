@@ -32,11 +32,9 @@ class User():
         else:
             return False
 
-    #Add a book the users read list.
     def read_book(self, book, rating = None):
         self.books[book] = rating
 
-    #Determine the average of rating of books that the user has read.
     def get_average_rating(self):
         rating_sum = 0
         for book_rating in self.books.values():
@@ -60,15 +58,12 @@ class Book():
             raise TypeError
         self.ratings = []
 
-    #Get the title of the book.
     def get_title(self):
         return self.title
 
-    #Get the ISBN on the book.
     def get_isbn(self):
         return self.isbn
 
-    #Set a new ISBN to the book.
     def set_isbn(self, newISBN):
         if isinstance(newISBN, int):
             self.isbn = newISBN
@@ -77,14 +72,12 @@ class Book():
             print("The new ISBN you entered is of invalid type.")
             raise TypeError
 
-    #Add a rating to the book.
     def add_rating(self, rating):
         if rating >= 0 and rating <= 4:
             self.ratings.append(rating)
         else:
             print("Invalid Rating")
 
-    #Determine the average of ratings given to this books.
     def get_average_rating(self):
         total_sum = 0
         for rating in self.ratings:
@@ -135,11 +128,9 @@ class Non_Fiction(Book):
             print("level argument is not a string")
             raise TypeError
 
-    #Returns the subject of the book.
     def get_subject(self):
         return self.subject
 
-    #Returns the level of the book.
     def get_level(self):
         return self.level
 
@@ -153,7 +144,6 @@ class TomeRater():
         self.books = {}
         self.ISBN_Index = {}
 
-    #Creates a new Book object.
     def create_book(self, title, isbn):
         if isbn not in self.ISBN_Index.keys():
             newBook = Book(title, isbn)
@@ -163,7 +153,6 @@ class TomeRater():
             print("A book with the ISBN already exists")
             raise DuplicateBook
 
-    #Creates a new Fiction object
     def create_novel(self, title, author, isbn):
         if isbn not in self.ISBN_Index.keys():
             newFictionBook = Fiction(title, author, isbn)
@@ -173,7 +162,6 @@ class TomeRater():
             print("A book with the ISBN already exists")
             raise DuplicateBook
 
-    #Creates a new Non_Fiction object.
     def create_non_fiction(self, title, subject, level, isbn):
         if isbn not in self.ISBN_Index.keys():
             newNonFictionBook = Non_Fiction(title, subject, level, isbn)
@@ -183,7 +171,6 @@ class TomeRater():
             print("A book with the ISBN already exists")
             raise DuplicateBook
 
-    #Adds a book to an user's read list.
     def add_book_to_user(self, book, email, rating = None):
         if email in self.users.keys():
             self.users[email].read_book(book, rating)
@@ -196,7 +183,6 @@ class TomeRater():
             else:
                 self.books[book] += 1
 
-    #Adds a new user object to this instance.
     def add_user(self, name, email, user_books = None):
         newUser = User(name, email)
         if '@' in email:
@@ -215,17 +201,14 @@ class TomeRater():
             for book in user_books:
                 self.add_book_to_user(book, email)
 
-    #Prints out the books of an instance.
     def print_catalog(self):
         for key in self.books.keys():
             print(key)
 
-    #Prints the users of an instance.
     def print_users(self):
         for value in self.users.values():
             print(value)
 
-    #Returns the book that was most read.
     def get_most_read_book(self):
         book_list = list(self.books.keys())
         value_list = list(self.books.values())
@@ -235,7 +218,6 @@ class TomeRater():
                 max_value = val
         return book_list[value_list.index(max_value)]
 
-    #Returns the book that has the highest rating.
     def highest_rated_book(self):
         highest_average = float("-inf")
         for book in self.books.keys():
@@ -245,7 +227,6 @@ class TomeRater():
             if bookz.get_average_rating() == highest_average:
                 return bookz
 
-    #Returns the user who has given the highest average rating to books.
     def most_positive_user(self):
         highest_positive_rating = 0
         for user in self.users.values():
@@ -255,7 +236,6 @@ class TomeRater():
             if userz.get_average_rating() == highest_positive_rating:
                 return userz
 
-    #Returns the most read books in descending order.
     def get_n_most_read_books(self, n):
         read_times = list(self.books.values())
         book_objects = list(self.books.keys())
@@ -268,7 +248,6 @@ class TomeRater():
             book_objects.pop(remove_index)
         return output_list
 
-    #Returns the users that have read the most books in descending order.
     def get_n_most_prolific_readers(self, n):
         users = list(self.users.values())
         output_list = []
@@ -287,7 +266,6 @@ class TomeRater():
     def __repr__(self):
         return "Number of users: {}, Number of Books: {}".format(len(self.users.values()),len(self.books.keys()))
 
-#If they have same number of exact users then they are equal.
     def __eq__(self, other):
         same = True
         if len(self.users.values()) != len(other.users.values()):
